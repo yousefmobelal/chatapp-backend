@@ -1,0 +1,42 @@
+import { createServer } from 'http';
+import { createApp } from '@/app';
+import { env } from '@/config/env';
+import { logger } from '@/utils/logger';
+import { closeDatabase, connectToDatabase } from '@/config/sequelize';
+import { initModels } from '@/models';
+import { closePublisher, initPublisher } from '@/messaging/event-publishing';
+
+const main = async () => {
+  try {
+    await connectToDatabase();
+    await initModels();
+    await initPublisher();
+
+    const app = createApp();
+    const server = createServer(app);
+
+    const port = env.AUTH_SERVICE_PORT;
+    server.listen(port, () => {
+      logger.info({ port }, 'Auth service is running');
+    });
+
+    const shutdown = () => {
+      logger.info('Shutting down auth service');
+      Promise.all([closeDatabase(), closePublisher()])
+        .catch((error) => {
+          logger.error({ error }, 'Error during shutdown tasks');
+        })
+        .finally(() => {
+          server.close(() => process.exit(0));
+        });
+    };
+
+    process.on('SIGINT', shutdown);
+    process.on('SIGTERM', shutdown);
+  } catch (error) {
+    logger.error({ error }, 'Failed to start auth service');
+    process.exit(1);
+  }
+};
+
+void main();

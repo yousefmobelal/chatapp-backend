@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    // Here we determine the version of javascript to compile to
+    "target": "ES2022",
+    // Now we can use import and export statements
+    "module": "esnext",
+    // Resolve imports like nodejs does
+    "moduleResolution": "node",
+    // Allow default imports from modules with no default export
+    "allowSyntheticDefaultImports": true,
+    // you can import something like import data from './data.json' instead of import * as data from './data.json'
+    "esModuleInterop": true,
+    // Windows and MacOS treat file names with different casing as the same file, but Linux is case-sensitive.
+    "forceConsistentCasingInFileNames": true,
+    // Allow importing JSON files
+    "resolveJsonModule": true,
+    // Enable all strict type-checking options
+    "strict": true,
+    // Skip checking .d.ts files in node_modules
+    "skipLibCheck": true,
+    // Allow absolute imports from the baseUrl
+    "baseUrl": ".",
+    // Generate source maps for debugging
+    "sourceMap": true,
+    // Specify the output directory for compiled files
+    "outDir": "dist",
+    // Add Nodejs globals like process, buffer and __dirname etc.
+    "types": ["node"]
+  },
+  // Don't compile files in node_modules and don't recompile files in dist
+  "exclude": ["node_modules", "dist"]
+}
