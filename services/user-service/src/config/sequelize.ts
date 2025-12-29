@@ -16,9 +16,16 @@ export const sequelize = new Sequelize(env.USER_DB_URL, {
   },
 });
 
-export const connectToDatabase = async () => {
+const connectToDatabase = async () => {
   await sequelize.authenticate();
   logger.info('User database connection established successfully.');
+};
+
+export const initializeDatabase = async () => {
+  await connectToDatabase();
+  const syncOptions = env.NODE_ENV === 'development' ? {} : { alter: true };
+  await sequelize.sync(syncOptions);
+  logger.info('Database synchronized successfully.');
 };
 
 export const closeDatabase = async () => {

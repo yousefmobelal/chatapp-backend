@@ -20,10 +20,7 @@ export const createApp = (): Application => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  app.use((req, res, next) => {
-    console.log(`This is the headers: ${JSON.stringify(req.headers)}`);
-    next();
-  }, createInternalAuthMiddleware(env.INTERNAL_API_TOKEN));
+  app.use(createInternalAuthMiddleware(env.INTERNAL_API_TOKEN));
 
   regsiterRoutes(app);
 

@@ -1,8 +1,11 @@
-import { registerUser } from '@/controllers/auth.controller';
-import { registerSchema } from '@/validation/auth.schema';
+import { loginUser, refreshToken, registerUser, revokeToken } from '@/controllers/auth.controller';
+import { loginSchema, refreshSchema, registerSchema, revokeSchema } from '@/validation/auth.schema';
 import { asyncHandler, validateRequest } from '@chatapp/common';
 import { Router } from 'express';
 
 export const authRouter: Router = Router();
 
 authRouter.post('/register', validateRequest({ body: registerSchema }), asyncHandler(registerUser));
+authRouter.post('/login', validateRequest({ body: loginSchema }), asyncHandler(loginUser));
+authRouter.post('/refresh', validateRequest({ body: refreshSchema }), asyncHandler(refreshToken));
+authRouter.post('/revoke', validateRequest({ body: revokeSchema }), asyncHandler(revokeToken));
