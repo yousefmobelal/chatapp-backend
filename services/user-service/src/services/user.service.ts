@@ -42,7 +42,7 @@ class UserService {
   async searchUsers(params: {
     query: string;
     limit?: number;
-    execuldeIds?: string[];
+    excludeIds?: string[];
   }): Promise<User[]> {
     const query = params.query.trim();
     if (query.length === 0) {
@@ -51,7 +51,7 @@ class UserService {
 
     return await this.repository.searchByQuery(query, {
       limit: params.limit,
-      execuldeIds: params.execuldeIds,
+      excludeIds: params.excludeIds,
     });
   }
 

@@ -32,7 +32,7 @@ export class UserRepository {
 
   async searchByQuery(
     query: string,
-    options: { limit?: number; execuldeIds?: string[] } = {},
+    options: { limit?: number; excludeIds?: string[] } = {},
   ): Promise<User[]> {
     const where: WhereOptions = {
       [Op.or]: [
@@ -41,9 +41,9 @@ export class UserRepository {
       ],
     };
 
-    if (options.execuldeIds && options.execuldeIds.length > 0) {
+    if (options.excludeIds && options.excludeIds.length > 0) {
       Object.assign(where, {
-        [Op.and]: [{ id: { [Op.notIn]: options.execuldeIds } }],
+        [Op.and]: [{ id: { [Op.notIn]: options.excludeIds } }],
       });
     }
 

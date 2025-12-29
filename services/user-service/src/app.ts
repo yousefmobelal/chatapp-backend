@@ -4,6 +4,7 @@ import cors from 'cors';
 import { errorHandler } from '@/middleware/error-handler';
 import { createInternalAuthMiddleware } from '@chatapp/common';
 import { env } from '@/config/env';
+import { regsiterRoutes } from '@/routes';
 
 export const createApp = (): Application => {
   const app = express();
@@ -23,6 +24,8 @@ export const createApp = (): Application => {
       exemptPaths: ['/users/health'],
     }),
   );
+
+  regsiterRoutes(app);
 
   app.use((_, res) => {
     res.status(404).json({ message: 'Not Found' });
