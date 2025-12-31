@@ -6,7 +6,7 @@ POST {{baseGateway}}/auth/register
 content-type: application/json
 
 {
-    "email": "test3@gmail.com",
+    "email": "test4@gmail.com",
     "password": "Test_test123456",
     "displayName": "Test User"
 }
@@ -17,6 +17,6 @@ POST {{baseGateway}}/auth/login
 content-type: application/json
 
 {
-    "email": "test3@gmail.com",
+    "email": "test4@gmail.com",
     "password": "Test_test123456"
 }
