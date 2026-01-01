@@ -29,6 +29,7 @@ class UserService {
         email: user.email,
         displayName: user.displayName,
         createdAt: user.createdAt.toISOString(),
+        updatedAt: user.updatedAt.toISOString(),
       });
       return user;
     } catch (error) {
@@ -62,6 +63,7 @@ class UserService {
       email: user.email,
       displayName: user.displayName,
       createdAt: user.createdAt.toISOString(),
+      updatedAt: user.updatedAt.toISOString(),
     });
     return user;
   }

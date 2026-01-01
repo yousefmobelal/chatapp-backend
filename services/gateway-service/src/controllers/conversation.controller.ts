@@ -8,6 +8,7 @@ import {
   conversationIdParamsSchema,
 } from '@/validation/conversation.schema';
 import { asyncHandler, HttpError } from '@chatapp/common';
+import { createMessageBodySchema, listMessagesQuerySchema } from '@/validation/message.schema';
 
 export const createConversationHandler: RequestHandler = asyncHandler(async (req, res) => {
   const user = getAuthenticatedUser(req);
@@ -49,4 +50,22 @@ export const getConversationHandler: RequestHandler = asyncHandler(async (req, r
   }
 
   res.json({ data: conversation });
+});
+
+export const createMessageHandler: RequestHandler = asyncHandler(async (req, res) => {
+  const user = getAuthenticatedUser(req);
+  const { id } = conversationIdParamsSchema.parse(req.params);
+  const payload = createMessageBodySchema.parse(req.body);
+  const message = await chatProxyService.createMessage(id, user.id, {
+    body: payload.body,
+  });
+  res.status(201).json({ data: message });
+});
+
+export const listMessagesHandler: RequestHandler = asyncHandler(async (req, res) => {
+  const user = getAuthenticatedUser(req);
+  const { id } = conversationIdParamsSchema.parse(req.params);
+  const query = listMessagesQuerySchema.parse(req.query);
+  const messages = await chatProxyService.listMessages(id, user.id, query);
+  res.json({ data: messages });
 });
