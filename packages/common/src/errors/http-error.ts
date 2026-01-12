@@ -1,10 +1,10 @@
 export class HttpError extends Error {
   constructor(
-    public readonly statusCode: number,
+    readonly statusCode: number,
     message: string,
-    public readonly details?: Record<string, unknown>
+    readonly details?: Record<string, unknown>,
   ) {
     super(message);
-    this.name = "HttpError";
+    this.name = 'HttpError';
   }
 }
